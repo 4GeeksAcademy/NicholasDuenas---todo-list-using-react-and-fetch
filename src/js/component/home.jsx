@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 //include images into your bundle
 import rigoImage from "../../img/rigo-baby.jpg";
+import { useParams } from 'react-router';
 
 //create your first component
 const Home = () => {
@@ -33,15 +34,18 @@ const Home = () => {
 		}
 	}
 
-	const deleteList = async () => {
-		const emptyList = todos.concat([{label: inputValue, done: false}])
-		// Make a PUT request
+	const handleDelete = async () => {
 		try {
-			await axios.delete(apiUrl, emptyList)
+		// Make a DELETE request using Axios
+		await axios.delete(`https://playground.4geeks.com/apis/fake/todos/user/NicholasDuenas`);
+	
+		// Handle success, e.g., show a success message or update the UI
+		console.log('User deleted successfully');
 		} catch (error) {
-			console.error('Error fetching data', error)
+		// Handle error, e.g., show an error message or log the error
+		console.error('Error deleting user:', error);
 		}
-	}
+	};
 
 
 	// //{item}{""}<i class="fa-solid fa-xmark" onClick={() => setTodos(todos.filter((t, currentIndex) => index != currentIndex))}></i>
@@ -67,6 +71,9 @@ const Home = () => {
 					</li>
 				))}
 			</ul>
+			<button onClick={handleDelete}>
+      			Delete User
+    		</button>	
 			<div>{todos.length}Tasks</div>
 		</div>
 	);
