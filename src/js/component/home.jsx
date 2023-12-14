@@ -38,6 +38,7 @@ const Home = () => {
 		try {
 		// Make a DELETE request using Axios
 		await axios.delete(`https://playground.4geeks.com/apis/fake/todos/user/NicholasDuenas`);
+		window.location.reload();
 	
 		// Handle success, e.g., show a success message or update the UI
 		console.log('User deleted successfully');
@@ -72,7 +73,7 @@ const Home = () => {
 				))}
 			</ul>
 			<button onClick={handleDelete}>
-      			Delete User
+      			Delete All Tasks
     		</button>	
 			<div>{todos.length}Tasks</div>
 		</div>
