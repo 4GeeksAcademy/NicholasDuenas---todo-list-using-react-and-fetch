@@ -9,16 +9,30 @@ const Home = () => {
 	const [inputValue, setInputValue] = useState("");
 	const [todos, setTodos] = useState([]);
 	const apiUrl = "https://playground.4geeks.com/apis/fake/todos/user/NicholasDuenas";
+
 	useEffect(async () => {
 		// Define the API endpoint
 		getList()
 	}, []);
+
+	useEffect(() => {
+		console.log("This function will run any time todos changes.");
+		updateApi()
+	}, [todos])
 
 	const putNewList = async (inputValue) => {
 		const newList = todos.concat([{label: inputValue, done: false}])
 		// Make a PUT request
 		try {
 			await axios.put(apiUrl, newList)
+		} catch (error) {
+			console.error('Error fetching data', error)
+		}
+	}
+	
+	const updateApi = async () => {
+		try {
+			await axios.put(apiUrl, todos)
 		} catch (error) {
 			console.error('Error fetching data', error)
 		}
@@ -68,12 +82,13 @@ const Home = () => {
 			<ul>
 				{todos.map((item, index) => (
 					<li key={item.id}>
-						{item.label}
+						<span>{item.label}</span>{""}
+						<i class="fa-solid fa-xmark" onClick={() => setTodos(todos.filter((t, currentIndex) => index != currentIndex))}></i>
 					</li>
 				))}
 			</ul>
 			<button onClick={handleDelete}>
-      			Delete All Tasks
+      			Delete User
     		</button>	
 			<div>{todos.length}Tasks</div>
 		</div>
